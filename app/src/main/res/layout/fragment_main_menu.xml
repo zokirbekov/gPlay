@@ -6,6 +6,11 @@
     android:orientation="vertical"
     android:gravity="center">
 
+    <uz.zokirbekov.gplay.ui.ImageWithTextButton
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        app:image="@drawable/chess_horse"
+        app:text="Games" />
 
 
 </LinearLayout>
