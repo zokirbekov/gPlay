@@ -8,8 +8,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import uz.zokirbekov.gplay.Games
+import uz.zokirbekov.gplay.MainActivity
 import uz.zokirbekov.gplay.R
 import uz.zokirbekov.gplay.adapters.MainMenuAdapter
+import uz.zokirbekov.gplay.fragments.gameFragments.ColorStepFragment
+import uz.zokirbekov.gplay.fragments.gameFragments.ConnectFourFragment
+import uz.zokirbekov.gplay.fragments.gameFragments.OrderNumbersFragment
+import uz.zokirbekov.gplay.fragments.gameFragments.TicTacToeFragment
 import uz.zokirbekov.gplay.models.MainMenuModel
 
 class GamesMenuFragment : Fragment(), MainMenuAdapter.OnGameClicked {
@@ -27,8 +32,16 @@ class GamesMenuFragment : Fragment(), MainMenuAdapter.OnGameClicked {
     override fun gameClicked(title: String) {
         when(title)
         {
-            //Games.ORDER_NUMBERS ->
+            Games.ORDER_NUMBERS -> switchGame(OrderNumbersFragment())
+            Games.CONNECT_FOUR -> switchGame(ConnectFourFragment())
+            Games.TIC_TAC_TOE -> switchGame(TicTacToeFragment())
+            Games.COLOR_STEP -> switchGame(ColorStepFragment())
         }
+    }
+
+    fun switchGame(fragment:Fragment)
+    {
+        (activity as MainActivity).switchFragment(fragment)
     }
 
     fun initAdapter()
@@ -39,7 +52,10 @@ class GamesMenuFragment : Fragment(), MainMenuAdapter.OnGameClicked {
     fun getAllGames() : ArrayList<MainMenuModel>
     {
         var games = arrayListOf<MainMenuModel>(
-                MainMenuModel(Games.ORDER_NUMBERS, R.drawable.order_numbers)
+                MainMenuModel(Games.ORDER_NUMBERS, R.drawable.order_numbers),
+                MainMenuModel(Games.COLOR_STEP, R.drawable.color_step),
+                MainMenuModel(Games.TIC_TAC_TOE, R.drawable.tic_tac_toe),
+                MainMenuModel(Games.CONNECT_FOUR, R.drawable.connect_four)
         )
 
         return games

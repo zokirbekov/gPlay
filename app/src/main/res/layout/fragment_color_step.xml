@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/connect_four_blue"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginEnd="32dp"
+                android:background="@drawable/circle"
+                android:tint="@color/color_step_blue"/>
+
+            <ImageView
+                android:id="@+id/connect_four_red"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:background="@drawable/circle"
+                android:tint="@color/color_step_red"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="32dp"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/connect_four_green"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginEnd="32dp"
+                android:background="@drawable/circle"
+                android:tint="@color/color_step_green"/>
+
+            <ImageView
+                android:id="@+id/connect_four_yellow"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:background="@drawable/circle"
+                android:tint="@color/color_step_yellow"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
