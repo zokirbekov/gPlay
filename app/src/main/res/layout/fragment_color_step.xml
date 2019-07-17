@@ -1,24 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:gravity="center"
-        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/connect_four_blue"
@@ -26,23 +28,23 @@
                 android:layout_height="150dp"
                 android:layout_marginEnd="32dp"
                 android:background="@drawable/circle"
-                android:tint="@color/color_step_blue"/>
+                android:backgroundTint="@color/color_step_blue" />
 
             <ImageView
                 android:id="@+id/connect_four_red"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:background="@drawable/circle"
-                android:tint="@color/color_step_red"/>
+                android:backgroundTint="@color/color_step_red" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginTop="32dp"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/connect_four_green"
@@ -50,17 +52,47 @@
                 android:layout_height="150dp"
                 android:layout_marginEnd="32dp"
                 android:background="@drawable/circle"
-                android:tint="@color/color_step_green"/>
+                android:backgroundTint="@color/color_step_green" />
 
             <ImageView
                 android:id="@+id/connect_four_yellow"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:background="@drawable/circle"
-                android:tint="@color/color_step_yellow"/>
+                android:backgroundTint="@color/color_step_yellow" />
 
         </LinearLayout>
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/button_new_game"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/button_new_game_color_step"
+        android:textColor="@color/white"
+        android:fontFamily="casual"
+        android:text="New Game"
+        android:textAllCaps="false"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@id/linearLayout"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+        app:layout_constraintStart_toStartOf="@id/linearLayout"
+        app:layout_constraintTop_toTopOf="@id/linearLayout" />
+
+    <TextView
+        android:id="@+id/text_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:text="Score : 1"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
