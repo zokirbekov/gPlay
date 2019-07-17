@@ -158,7 +158,7 @@ class ColorStepFragment : BaseGameFragment(), View.OnClickListener {
 
         val imageColor = v as ImageView
 
-        turnOffAndturnOnImageView(imageColor,1)
+        turnOffAndturnOnImageView(imageColor,0)
 
         if (!(game?.checkStep(imageColor.tag as Int)!!))
         {
