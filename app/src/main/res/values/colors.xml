@@ -5,7 +5,8 @@
     <color name="colorAccent">#FF4081</color>
     <color name="white">#fff</color>
     <color name="gray">#aaa</color>
-    
+    <color name="black">#000</color>
+
     <color name="color_step_red">#FF009E</color>
     <color name="color_step_green">#8DFF00</color>
     <color name="color_step_blue">#60B0F4</color>
