@@ -17,7 +17,7 @@ import uz.zokirbekov.gplay.fragments.gameFragments.OrderNumbersFragment
 import uz.zokirbekov.gplay.fragments.gameFragments.TicTacToeFragment
 import uz.zokirbekov.gplay.models.MainMenuModel
 
-class GamesMenuFragment : Fragment(), MainMenuAdapter.OnGameClicked {
+class GamesMenuFragment : BaseFragment(), MainMenuAdapter.OnGameClicked {
 
     lateinit var recyclerView: RecyclerView
 
@@ -41,6 +41,7 @@ class GamesMenuFragment : Fragment(), MainMenuAdapter.OnGameClicked {
 
     fun switchGame(fragment:Fragment)
     {
+        (fragment as BaseFragment).parent = this
         (activity as MainActivity).switchFragment(fragment)
     }
 

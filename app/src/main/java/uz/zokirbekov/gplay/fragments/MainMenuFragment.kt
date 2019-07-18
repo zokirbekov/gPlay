@@ -9,7 +9,7 @@ import uz.zokirbekov.gplay.MainActivity
 import uz.zokirbekov.gplay.R
 import uz.zokirbekov.gplay.ui.ImageWithTextButton
 
-class MainMenuFragment : Fragment(), View.OnClickListener {
+class MainMenuFragment : BaseFragment(), View.OnClickListener {
 
     lateinit var games:ImageWithTextButton
 
@@ -35,8 +35,14 @@ class MainMenuFragment : Fragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         when(v?.id)
         {
-            R.id.games -> (activity as MainActivity).switchFragment(GamesMenuFragment())
+            R.id.games -> switchFragment(GamesMenuFragment())
         }
+    }
+
+    private fun switchFragment(fragment: BaseFragment)
+    {
+        fragment.parent = this
+        (activity as MainActivity).switchFragment(fragment)
     }
 
 }

@@ -2,6 +2,6 @@ package uz.zokirbekov.gplay.fragments
 
 import android.support.v4.app.Fragment
 
-open class BaseGameFragment : BaseFragment() {
-
+open class BaseFragment : Fragment(){
+    public var parent:Fragment? = null
 }
