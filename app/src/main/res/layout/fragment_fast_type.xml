@@ -6,6 +6,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/fast_type_common_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Type 'new game' and FIRE !!!"
+        android:textSize="22sp"
+        android:textColor="@color/gray"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="0dp"

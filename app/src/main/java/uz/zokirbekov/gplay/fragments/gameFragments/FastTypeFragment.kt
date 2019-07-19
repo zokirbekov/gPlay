@@ -1,15 +1,16 @@
 package uz.zokirbekov.gplay.fragments.gameFragments
 
+import android.animation.Animator
 import android.animation.ObjectAnimator
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
-import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.AppCompatEditText
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
@@ -18,13 +19,9 @@ import uz.zokirbekov.gplay.fragments.BaseGameFragment
 import android.widget.TextView
 import java.util.*
 import kotlin.collections.ArrayList
-import android.util.DisplayMetrics
 import android.widget.RelativeLayout
-import android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT
-import android.content.Context.INPUT_METHOD_SERVICE
-import android.os.ResultReceiver
-import android.support.v4.content.ContextCompat.getSystemService
 import android.view.inputmethod.InputMethodManager
+import uz.zokirbekov.gplay.utils.AnimationHelper
 
 
 class FastTypeFragment : BaseGameFragment() {
@@ -32,29 +29,37 @@ class FastTypeFragment : BaseGameFragment() {
     lateinit var editText:AppCompatEditText
     lateinit var fire:ImageView
     lateinit var map:RelativeLayout
+    lateinit var commonText:TextView
 
     val texts:ArrayList<TextView> = ArrayList()
     val handler = Handler()
     val game = Game()
 
+    val TIME_CREATE_TEXTVIEW = 5000L
+    val TIME_DOWN_ANIMATION = 10000L
+
     val action = object : Runnable
     {
         override fun run() {
-            addText(game.addWord())
-            handler.postDelayed(this,3000)
+            if (!isGameOver) {
+                addText(game.addWord())
+                handler.postDelayed(this, TIME_CREATE_TEXTVIEW)
+            }
         }
 
     }
+
+    var isGameOver = true
+    var isCanceled = true
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_fast_type, container, false)
         initViews(v)
         initClicks()
         startViewAnimations()
-        val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+        editText.requestFocus()
+        ( (context)!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
 
-        imm!!.showSoftInput(editText,
-                0)
         return v
     }
 
@@ -63,6 +68,7 @@ class FastTypeFragment : BaseGameFragment() {
         editText = v.findViewById(R.id.fast_type_text)
         fire = v.findViewById(R.id.fast_type_fire)
         map = v.findViewById(R.id.fast_type_map)
+        commonText = v.findViewById(R.id.fast_type_common_text)
     }
 
     private fun initClicks()
@@ -70,8 +76,10 @@ class FastTypeFragment : BaseGameFragment() {
         fire.setOnClickListener {
 
             val word = editText.text?.trim().toString()
-            if (word.toLowerCase().equals("new game"))
+            if (word.toLowerCase().equals("new game") && isGameOver)
             {
+                editText.setText("")
+                AnimationHelper.fadeOut(commonText)
                 newGame()
             }
             else
@@ -99,9 +107,22 @@ class FastTypeFragment : BaseGameFragment() {
 
     private fun newGame()
     {
+        isCanceled = false;
+        isGameOver = false
+        disableAllAnimations()
+        texts.clear()
         game.newGame()
         map.removeAllViews()
         startTimer()
+    }
+
+    private fun gameOver()
+    {
+        isGameOver = true
+        stopTimer()
+        commonText.setText("Game Over ('new game' and FIRE !!!)")
+        AnimationHelper.fadeIn(commonText)
+        addText("Score : " + game.score)
     }
 
     private fun getRandomColor() : Int
@@ -123,20 +144,59 @@ class FastTypeFragment : BaseGameFragment() {
                     break
                 }
             }
+            val anim = needText?.tag as ObjectAnimator
+            isCanceled = true
+            anim.cancel()
             map.removeView(needText)
             texts.remove(needText)
             editText.setText("")
         }
     }
 
+    private fun disableAllAnimations()
+    {
+        val iterate = texts.listIterator()
+        while (iterate.hasNext()) {
+            val oldValue = iterate.next()
+            val anim = oldValue.tag as ObjectAnimator
+            anim.cancel()
+        }
+    }
+
     private fun down(v:View)
     {
+        isCanceled = isGameOver;
+        val random = Random()
         var intA:IntArray = IntArray(2)
         editText.getLocationInWindow(intA)
-        val y = intA[1]
+        val y = intA[1] - 1.5*editText.height
         val anim = ObjectAnimator.ofFloat(v,View.TRANSLATION_Y, y.toFloat())
-        anim.duration = 5000
+        anim.duration = TIME_DOWN_ANIMATION + random.nextInt(2000)
+        anim.addListener(object : Animator.AnimatorListener
+        {
+            override fun onAnimationRepeat(animation: Animator?) {
+
+            }
+
+            override fun onAnimationCancel(animation: Animator?) {
+
+            }
+
+            override fun onAnimationStart(animation: Animator?) {
+
+            }
+
+            override fun onAnimationEnd(animation: Animator?) {
+                if (!isCanceled) {
+                    if (!isGameOver)
+                        gameOver()
+                }
+            }
+
+        })
+        v.tag = anim
         anim.start()
+
     }
 
     private fun addText(word:String)
@@ -186,6 +246,7 @@ class FastTypeFragment : BaseGameFragment() {
             if (word in words)
             {
                 words.remove(word)
+                score++
                 return true
             }
             return false
