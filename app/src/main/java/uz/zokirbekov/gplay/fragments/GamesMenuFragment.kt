@@ -11,10 +11,7 @@ import uz.zokirbekov.gplay.Games
 import uz.zokirbekov.gplay.MainActivity
 import uz.zokirbekov.gplay.R
 import uz.zokirbekov.gplay.adapters.MainMenuAdapter
-import uz.zokirbekov.gplay.fragments.gameFragments.ColorStepFragment
-import uz.zokirbekov.gplay.fragments.gameFragments.ConnectFourFragment
-import uz.zokirbekov.gplay.fragments.gameFragments.OrderNumbersFragment
-import uz.zokirbekov.gplay.fragments.gameFragments.TicTacToeFragment
+import uz.zokirbekov.gplay.fragments.gameFragments.*
 import uz.zokirbekov.gplay.models.MainMenuModel
 
 class GamesMenuFragment : BaseFragment(), MainMenuAdapter.OnGameClicked {
@@ -36,6 +33,7 @@ class GamesMenuFragment : BaseFragment(), MainMenuAdapter.OnGameClicked {
             Games.CONNECT_FOUR -> switchGame(ConnectFourFragment())
             Games.TIC_TAC_TOE -> switchGame(TicTacToeFragment())
             Games.COLOR_STEP -> switchGame(ColorStepFragment())
+            Games.FAST_TYPE -> switchGame(FastTypeFragment())
         }
     }
 
@@ -56,7 +54,9 @@ class GamesMenuFragment : BaseFragment(), MainMenuAdapter.OnGameClicked {
                 MainMenuModel(Games.ORDER_NUMBERS, R.drawable.order_numbers),
                 MainMenuModel(Games.COLOR_STEP, R.drawable.color_step),
                 MainMenuModel(Games.TIC_TAC_TOE, R.drawable.tic_tac_toe),
-                MainMenuModel(Games.CONNECT_FOUR, R.drawable.connect_four)
+                MainMenuModel(Games.CONNECT_FOUR, R.drawable.connect_four),
+                MainMenuModel(Games.FAST_TYPE, R.drawable.typewriter)
+
         )
 
         return games
