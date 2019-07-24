@@ -12,6 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import uz.zokirbekov.gplay.R
 import uz.zokirbekov.gplay.fragments.BaseGameFragment
+import uz.zokirbekov.gplay.utils.Point
 import java.util.*
 
 class OrderNumbersFragment : BaseGameFragment(), View.OnClickListener {
@@ -244,6 +245,4 @@ class OrderNumbersFragment : BaseGameFragment(), View.OnClickListener {
            }
        }
    }
-
-    class Point(val i:Int,val j:Int)
 }
