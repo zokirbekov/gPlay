@@ -107,9 +107,10 @@ class FastTypeFragment : BaseGameFragment() {
 
     private fun newGame()
     {
+        disableAllAnimations()
         isCanceled = false;
         isGameOver = false
-        disableAllAnimations()
+
         texts.clear()
         game.newGame()
         map.removeAllViews()
@@ -208,7 +209,7 @@ class FastTypeFragment : BaseGameFragment() {
         textView.textSize = 22f
         textView.setTextColor(getRandomColor())
 
-        val width = map.width - 200
+        val width = map.width - 400
         var x = random.nextInt(width) + 100
 
         var params = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
@@ -286,7 +287,10 @@ class FastTypeFragment : BaseGameFragment() {
                     "Am I stupid ?",
                     "Let's :)",
                     "Wakanda forever",
-                    "Just enough"
+                    "Just enough",
+                    "XaXaXaXa",
+                    "Do You Want IT ?",
+                    "I <3 u"
             )
         }
     }
