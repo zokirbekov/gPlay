@@ -1,3 +1,3 @@
 package uz.zokirbekov.gplay.utils
 
-class Point(val i:Int,val j:Int)
+class Point(var i:Int,var j:Int)

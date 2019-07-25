@@ -11,12 +11,14 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import uz.zokirbekov.gplay.R
 import uz.zokirbekov.gplay.fragments.BaseGameFragment
 import uz.zokirbekov.gplay.utils.AnimationHelper
+import uz.zokirbekov.gplay.utils.Drawer
 import uz.zokirbekov.gplay.utils.Point
 
 class TicTacToeFragment : BaseGameFragment(), View.OnClickListener {
@@ -29,6 +31,8 @@ class TicTacToeFragment : BaseGameFragment(), View.OnClickListener {
     lateinit var map:MutableList<MutableList<AppCompatTextView>>
     lateinit var gridLayout: GridLayout
     lateinit var chooseContainer:LinearLayout
+
+    lateinit var drawImage: ImageView
 
     lateinit var text_o:TextView
     lateinit var text_x:TextView
@@ -50,6 +54,8 @@ class TicTacToeFragment : BaseGameFragment(), View.OnClickListener {
 
         text_o = v.findViewById(R.id.tic_tac_toe_o)
         text_x = v.findViewById(R.id.tic_tac_toe_x)
+
+        drawImage = v.findViewById(R.id.drawImage)
 
         chooseContainer = v.findViewById(R.id.tic_tac_toe_choose)
 
@@ -127,6 +133,22 @@ class TicTacToeFragment : BaseGameFragment(), View.OnClickListener {
     fun gameOver()
     {
         isGameOver = true
+
+    }
+
+    fun drawLine(positions:MutableList<Point>)
+    {
+        val st = map[positions[0].i][positions[0].j]
+        val et = map[positions[1].i][positions[1].j]
+
+        val startX:Float = st.x + st.width/2 - 20
+        val startY:Float = st.y + st.height/2 - 20
+
+        val endX:Float = et.x + et.width/2 - 20
+        val endY:Float = et.y + et.height/2 - 10 + 20
+
+        //drawImage.setImageBitmap(Drawer.drawLine(drawImage,startX,startY,endX,endY))
+        AnimationHelper.animateDrawLine(drawImage,startX,startY,endX,endY)
     }
 
     override fun onClick(v: View?) {
@@ -136,8 +158,11 @@ class TicTacToeFragment : BaseGameFragment(), View.OnClickListener {
                 val select = if (game.isTurnX) 'X' else 'O'
                 map[point.i][point.j].text = select.toString()
                 game.map[point.i][point.j] = select
-                if (game.check())
+                val positions = MutableList<Point>(2, {Point(0,0)})
+                if (game.check(positions))
                 {
+                    gameOver()
+                    drawLine(positions)
                     Toast.makeText(context,"WWW",Toast.LENGTH_LONG).show()
                 }
                 game.isTurnX = !game.isTurnX
@@ -168,24 +193,40 @@ class TicTacToeFragment : BaseGameFragment(), View.OnClickListener {
 
         }
 
-        fun check() : Boolean
+        fun check(outPosition:MutableList<Point>) : Boolean
         {
             for (i in map)
             {
                 var str = i.joinToString("")
                     if (str.equals(XXX) || str.equals(OOO))
                     {
+                        outPosition[0].i = map.indexOf(i)
+                        outPosition[0].j = 0
+                        outPosition[1].i = outPosition[0].i
+                        outPosition[1].j = 0
                         return true
                     }
             }
 
             if (String(arrayOf(map[0][0],map[1][1],map[2][2]).toCharArray()).equals(XXX)
-                    || String(arrayOf(map[0][0],map[1][1],map[2][2]).toCharArray()).equals(OOO))
+                    || String(arrayOf(map[0][0],map[1][1],map[2][2]).toCharArray()).equals(OOO)) {
+                outPosition[0].i = 0
+                outPosition[0].j = 0
+                outPosition[1].i = 2
+                outPosition[1].j = 2
                 return true
+            }
 
             if (String(arrayOf(map[0][2],map[1][1],map[2][0]).toCharArray()).equals(XXX)
-                    || String(arrayOf(map[0][2],map[1][1],map[2][0]).toCharArray()).equals(OOO))
+                    || String(arrayOf(map[0][2],map[1][1],map[2][0]).toCharArray()).equals(OOO)) {
+
+                outPosition[0].i = 0
+                outPosition[0].j = 2
+                outPosition[1].i = 2
+                outPosition[1].j = 0
+
                 return true
+            }
 
             for (i in 0..2) {
                 var str:String = ""
@@ -195,8 +236,15 @@ class TicTacToeFragment : BaseGameFragment(), View.OnClickListener {
                     str += map[j][i]
                 }
 
-                if (str.equals(XXX) || str.equals(OOO))
+                if (str.equals(XXX) || str.equals(OOO)) {
+
+                    outPosition[0].i = 0
+                    outPosition[0].j = i
+                    outPosition[1].i = 2
+                    outPosition[1].j = i
+
                     return true
+                }
             }
 
             return false

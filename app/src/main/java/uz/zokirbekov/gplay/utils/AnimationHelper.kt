@@ -3,6 +3,7 @@ package uz.zokirbekov.gplay.utils
 import android.animation.ObjectAnimator
 import android.os.Handler
 import android.view.View
+import android.widget.ImageView
 
 class AnimationHelper {
 
@@ -24,6 +25,28 @@ class AnimationHelper {
             objectAnimator.duration = DURATION
             objectAnimator.start()
             Handler().postDelayed({v.visibility = View.INVISIBLE}, DURATION + 10)
+        }
+
+        fun animateDrawLine(imageView:ImageView,startX:Float, startY:Float, endX:Float, endY:Float)
+        {
+            val handler = Handler()
+
+            val stepX = (endX - startX)/100
+            val stepY = (endY - startY)/100
+
+            var currentX = startX
+            var currentY = startY
+
+            for (i in 0..99)
+            {
+                handler.postDelayed(
+                        {
+                            imageView.setImageBitmap(Drawer.drawLine(imageView,startX,startY,currentX,currentY))
+                            imageView.invalidate()
+                            currentX += stepX
+                            currentY += stepY
+                        },(10*i).toLong())
+            }
         }
 
     }

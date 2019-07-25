@@ -57,6 +57,16 @@
 
     </LinearLayout>
 
+    <ImageView
+        android:id="@+id/drawImage"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/tic_tac_toe_map"
+        app:layout_constraintEnd_toEndOf="@id/tic_tac_toe_map"
+        app:layout_constraintTop_toTopOf="@id/tic_tac_toe_map"
+        app:layout_constraintBottom_toBottomOf="@id/tic_tac_toe_map"
+        android:layout_margin="8dp"/>
+
     <android.support.v7.widget.GridLayout
         android:id="@+id/tic_tac_toe_map"
         android:layout_width="wrap_content"

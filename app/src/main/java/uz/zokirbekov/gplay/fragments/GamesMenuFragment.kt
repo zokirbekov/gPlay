@@ -34,6 +34,7 @@ class GamesMenuFragment : BaseFragment(), MainMenuAdapter.OnGameClicked {
             Games.TIC_TAC_TOE -> switchGame(TicTacToeFragment())
             Games.COLOR_STEP -> switchGame(ColorStepFragment())
             Games.FAST_TYPE -> switchGame(FastTypeFragment())
+            Games.TAP_TAP_TAP -> switchGame(TapTapTapFragment())
         }
     }
 
@@ -55,8 +56,8 @@ class GamesMenuFragment : BaseFragment(), MainMenuAdapter.OnGameClicked {
                 MainMenuModel(Games.COLOR_STEP, R.drawable.color_step),
                 MainMenuModel(Games.TIC_TAC_TOE, R.drawable.tic_tac_toe),
                 MainMenuModel(Games.CONNECT_FOUR, R.drawable.connect_four),
-                MainMenuModel(Games.FAST_TYPE, R.drawable.typewriter)
-
+                MainMenuModel(Games.FAST_TYPE, R.drawable.typewriter),
+                MainMenuModel(Games.TAP_TAP_TAP,R.drawable.tap)
         )
 
         return games
