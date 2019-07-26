@@ -12,6 +12,7 @@
         android:layout_height="100dp"
         android:textSize="18sp"
         android:padding="8dp"
-        android:background="@drawable/border_tap_tap_tap_new_game"/>
+        android:background="@drawable/border_tap_tap_tap_new_game"
+        android:layout_centerInParent="true" />
 
 </RelativeLayout>

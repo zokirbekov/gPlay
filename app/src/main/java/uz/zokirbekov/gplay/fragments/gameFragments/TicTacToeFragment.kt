@@ -126,8 +126,8 @@ class TicTacToeFragment : BaseGameFragment(), View.OnClickListener {
     {
         isGameOver = false
         chooseSide()
-        ai.init()
         game.newGame()
+        ai.init(game)
     }
 
     fun gameOver()
@@ -193,37 +193,37 @@ class TicTacToeFragment : BaseGameFragment(), View.OnClickListener {
 
         }
 
-        fun check(outPosition:MutableList<Point>) : Boolean
+        fun check(outPosition:MutableList<Point>?) : Boolean
         {
             for (i in map)
             {
                 var str = i.joinToString("")
                     if (str.equals(XXX) || str.equals(OOO))
                     {
-                        outPosition[0].i = map.indexOf(i)
-                        outPosition[0].j = 0
-                        outPosition[1].i = outPosition[0].i
-                        outPosition[1].j = 0
+                        outPosition?.get(0)?.i = map.indexOf(i)
+                        outPosition?.get(0)?.j = 0
+                        outPosition?.get(1)?.i = outPosition?.get(0)?.i!!
+                        outPosition.get(1).j = 0
                         return true
                     }
             }
 
             if (String(arrayOf(map[0][0],map[1][1],map[2][2]).toCharArray()).equals(XXX)
                     || String(arrayOf(map[0][0],map[1][1],map[2][2]).toCharArray()).equals(OOO)) {
-                outPosition[0].i = 0
-                outPosition[0].j = 0
-                outPosition[1].i = 2
-                outPosition[1].j = 2
+                outPosition?.get(0)?.i = 0
+                outPosition?.get(0)?.j = 0
+                outPosition?.get(1)?.i = 2
+                outPosition?.get(1)?.j = 2
                 return true
             }
 
             if (String(arrayOf(map[0][2],map[1][1],map[2][0]).toCharArray()).equals(XXX)
                     || String(arrayOf(map[0][2],map[1][1],map[2][0]).toCharArray()).equals(OOO)) {
 
-                outPosition[0].i = 0
-                outPosition[0].j = 2
-                outPosition[1].i = 2
-                outPosition[1].j = 0
+                outPosition?.get(0)?.i = 0
+                outPosition?.get(0)?.j = 2
+                outPosition?.get(1)?.i = 2
+                outPosition?.get(1)?.j = 0
 
                 return true
             }
@@ -238,10 +238,10 @@ class TicTacToeFragment : BaseGameFragment(), View.OnClickListener {
 
                 if (str.equals(XXX) || str.equals(OOO)) {
 
-                    outPosition[0].i = 0
-                    outPosition[0].j = i
-                    outPosition[1].i = 2
-                    outPosition[1].j = i
+                    outPosition?.get(0)?.i = 0
+                    outPosition?.get(0)?.j = i
+                    outPosition?.get(1)?.i = 2
+                    outPosition?.get(1)?.j = i
 
                     return true
                 }
@@ -254,14 +254,75 @@ class TicTacToeFragment : BaseGameFragment(), View.OnClickListener {
 
     class AI
     {
-        lateinit var map:MutableList<MutableList<Char>>
+
+        private val LOSE = -1
+        private val NONE = 0
+        private val WIN = 1
 
         var isPlayerX = false
 
-        fun init()
+        lateinit var game:Game
+
+        fun init(game:Game)
         {
-            map = MutableList(3, {MutableList(3,{' '})})
+            this.game = game
         }
+
+        fun chooseMove() : Point?
+        {
+            var point:Point? = null
+
+            return point
+        }
+
+        private fun runMinMax()
+        {
+            var moves = getMoves(game.map)
+        }
+
+        private fun score(position:Point, depth:Int) : Int
+        {
+
+
+//            if (isPlayerX)
+//            {
+//                if (depth % 2 == 0)
+//                        if (game.check(null))
+//                            return WIN
+//                        else
+//
+//                else
+//                        if (game.check(null)) return LOSE
+//            }
+//            else
+//            {
+//                if (depth % 2 != 0)
+//                        if (game.check(null)) return WIN
+//                    else
+//                        if (game.check(null)) return LOSE
+//            }
+            return NONE
+        }
+
+        private fun getMoves(map:MutableList<MutableList<Char>>) : ArrayList<Point>
+        {
+            val moves = ArrayList<Point>()
+            for (i in 0..2)
+            {
+                for (j in 0..2)
+                {
+                    if (map[i][j] == ' ')
+                        moves.add(Point(i,j))
+                }
+            }
+            return moves
+        }
+
+        private fun heuristicScore(position: Point)
+        {
+
+        }
+
     }
 
 }
