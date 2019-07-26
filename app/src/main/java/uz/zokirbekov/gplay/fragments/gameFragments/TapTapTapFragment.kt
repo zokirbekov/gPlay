@@ -77,8 +77,6 @@ class TapTapTapFragment : BaseGameFragment(), View.OnClickListener {
     private fun addView()
     {
         val button = Button(context)
-        button.width = 70
-        button.height = 70
 
         val random = Random()
         val number = random.nextInt(game.score + 1) + 3
@@ -89,6 +87,8 @@ class TapTapTapFragment : BaseGameFragment(), View.OnClickListener {
 
         params.leftMargin = x
         params.topMargin = 10
+        params.width = 150
+        params.height = 150
 
         button.layoutParams = params
 
