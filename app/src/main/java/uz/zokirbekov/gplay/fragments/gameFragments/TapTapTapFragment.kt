@@ -18,7 +18,7 @@ import kotlin.collections.ArrayList
 class TapTapTapFragment : BaseGameFragment(), View.OnClickListener {
 
     lateinit var map:RelativeLayout
-    lateinit var button:Button
+    lateinit var newGameButton:Button
 
     var height:Int = 500
     var width:Int = 500
@@ -56,19 +56,19 @@ class TapTapTapFragment : BaseGameFragment(), View.OnClickListener {
     private fun initViews(v:View)
     {
         map = v.findViewById(R.id.tap_tap_tap_map)
-        button = v.findViewById(R.id.tap_tap_tap_new_game)
+        newGameButton = v.findViewById(R.id.tap_tap_tap_new_game)
     }
 
     private fun initClicks()
     {
-        button.setOnClickListener {
+        newGameButton.setOnClickListener {
             if (currentPosNewGame <= NEW_GAME.length) {
-                button.setText(NEW_GAME.substring(0, currentPosNewGame))
+                newGameButton.setText(NEW_GAME.substring(0, currentPosNewGame))
                 currentPosNewGame++
             }
             else
             {
-                AnimationHelper.fadeOut(button)
+                AnimationHelper.fadeOut(newGameButton)
                 newGame()
             }
         }
@@ -81,10 +81,10 @@ class TapTapTapFragment : BaseGameFragment(), View.OnClickListener {
         button.height = 70
 
         val random = Random()
-        val number = random.nextInt(game.score + 1) + 10
-        val x = random.nextInt(width - 100) + 50
+        val number = random.nextInt(game.score + 1) + 3
+        val x = random.nextInt(width - 200) + 50
 
-        var params = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
+        val params = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT)
 
         params.leftMargin = x
@@ -168,6 +168,8 @@ class TapTapTapFragment : BaseGameFragment(), View.OnClickListener {
     {
         isGameOver = true
         stopTimer()
+        map.addView(newGameButton)
+        AnimationHelper.fadeIn(newGameButton)
     }
 
     override fun onClick(v: View?) {
@@ -176,11 +178,12 @@ class TapTapTapFragment : BaseGameFragment(), View.OnClickListener {
         number--
         if (number == 0)
         {
+            isCanceled = true
             (button.tag as ObjectAnimator).cancel()
             buttons.remove(button)
             map.removeView(button)
             game.score++
-            isCanceled = true
+
         }
         else
         {
