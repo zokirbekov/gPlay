@@ -8,5 +8,6 @@ class Games {
         val TIC_TAC_TOE = "Tic Tac Toe"
         val FAST_TYPE = "Fast type"
         val TAP_TAP_TAP = "Tap tap tap"
+        val FIND_MATCHES = "Find matches"
     }
 }

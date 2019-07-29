@@ -35,6 +35,7 @@ class GamesMenuFragment : BaseFragment(), MainMenuAdapter.OnGameClicked {
             Games.COLOR_STEP -> switchGame(ColorStepFragment())
             Games.FAST_TYPE -> switchGame(FastTypeFragment())
             Games.TAP_TAP_TAP -> switchGame(TapTapTapFragment())
+            Games.FIND_MATCHES -> switchGame(FindMatchesFragment())
         }
     }
 
@@ -57,7 +58,8 @@ class GamesMenuFragment : BaseFragment(), MainMenuAdapter.OnGameClicked {
                 MainMenuModel(Games.TIC_TAC_TOE, R.drawable.tic_tac_toe),
                 MainMenuModel(Games.CONNECT_FOUR, R.drawable.connect_four),
                 MainMenuModel(Games.FAST_TYPE, R.drawable.typewriter),
-                MainMenuModel(Games.TAP_TAP_TAP,R.drawable.tap)
+                MainMenuModel(Games.TAP_TAP_TAP, R.drawable.tap),
+                MainMenuModel(Games.FIND_MATCHES, R.drawable.color_step)
         )
 
         return games

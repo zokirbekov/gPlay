@@ -2,8 +2,11 @@ package uz.zokirbekov.gplay.fragments.gameFragments
 
 import android.animation.Animator
 import android.animation.ObjectAnimator
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
+import android.support.v4.view.ViewCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -94,6 +97,9 @@ class TapTapTapFragment : BaseGameFragment(), View.OnClickListener {
 
         button.setText(number.toString())
         button.setOnClickListener(this)
+        button.setTextColor(Color.WHITE)
+        ViewCompat.setBackgroundTintList(button, ColorStateList.valueOf(getRandomColor()))
+
         map.addView(button)
         buttons.add(button)
         down(button)
@@ -104,7 +110,7 @@ class TapTapTapFragment : BaseGameFragment(), View.OnClickListener {
         isCanceled = isGameOver;
         val random = Random()
         val anim = ObjectAnimator.ofFloat(v,View.TRANSLATION_Y, height.toFloat())
-        anim.duration = TIME_DOWN_ANIMATION + random.nextInt(2000)
+        anim.duration = (TIME_DOWN_ANIMATION/game.speed).toLong() + random.nextInt(2000)
         anim.addListener(object : Animator.AnimatorListener
         {
             override fun onAnimationRepeat(animation: Animator?) {
@@ -191,16 +197,25 @@ class TapTapTapFragment : BaseGameFragment(), View.OnClickListener {
         }
     }
 
+    private fun getRandomColor() : Int
+    {
+        val random = Random()
+        return Color.argb(255, random.nextInt(200),random.nextInt(200),random.nextInt(200))
+    }
+
     class Game()
     {
-
+        var speed = 1.0
         var score = 0
-
+        set(value) {
+            if (value % 10 == 0)
+                speed *= 0.8
+            field = value
+        }
         fun newGame()
         {
             score = 0
         }
-
     }
 
 }
